@@ -12,7 +12,7 @@ open class historyOfShop: RealmObject() {
     var url: String = ""
 
     companion object {
-        fun findAll(): List<historyOfShop> = // お気に入りのShopを全件取得
+        fun findAll(): List<historyOfShop> = // クーポンを閲覧したShopを全件取得
             Realm.getDefaultInstance().use { realm ->
                 realm.where(historyOfShop::class.java)
                     .findAll().let {
@@ -20,7 +20,7 @@ open class historyOfShop: RealmObject() {
                     }
             }
 
-        fun findBy(id: String): historyOfShop? = // お気に入りされているShopをidで検索して返す。お気に入りに登録されていなければnullで返す
+        fun findBy(id: String): historyOfShop? = // クーポンを閲覧したShopをidで検索して返す。なければnullで返す
             Realm.getDefaultInstance().use { realm ->
                 realm.where(historyOfShop::class.java)
                     .equalTo(historyOfShop::id.name, id)
@@ -29,7 +29,7 @@ open class historyOfShop: RealmObject() {
                     }
             }
 
-        fun findByURL(url: String): historyOfShop? = // お気に入りされているShopをidで検索して返す。お気に入りに登録されていなければnullで返す
+        fun findByURL(url: String): historyOfShop? = // クーポンを閲覧したShopをidで検索して返す。なければnullで返す
             Realm.getDefaultInstance().use { realm ->
                 realm.where(historyOfShop::class.java)
                     .equalTo(historyOfShop::url.name, url)
@@ -38,12 +38,12 @@ open class historyOfShop: RealmObject() {
                     }
             }
 
-        fun insert(favoriteShop: historyOfShop) = // お気に入り追加
+        fun insert(favoriteShop: historyOfShop) = // 閲覧履歴に追加
             Realm.getDefaultInstance().executeTransaction {
                 it.insertOrUpdate(favoriteShop)
             }
 
-        fun delete(id: String) = // idでお気に入りから削除する
+        fun delete(id: String) = // idで閲覧履歴から削除する
             Realm.getDefaultInstance().use { realm ->
                 realm.where(historyOfShop::class.java)
                     .equalTo(historyOfShop::id.name, id)

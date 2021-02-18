@@ -76,6 +76,7 @@ class FavoriteAdapter(private val context: Context): RecyclerView.Adapter<Recycl
                 onClickDeleteFavorite?.invoke(data)
                 notifyItemChanged(position)
             }
+
         }
     }
 

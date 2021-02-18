@@ -25,7 +25,6 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
     // Itemを押したときのメソッド
     var onClickItem: ((String) -> Unit)? = null
     var onClickItem2: ((Shop) -> Unit)? = null
-
     fun refresh(list: List<Shop>) {
         update(list, false)
     }
@@ -60,6 +59,8 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
         val imageView: ImageView = view.findViewById(R.id.imageView)
         // レイアウトファイルからidがfavoriteImageViewのImageViewオブジェクトを取得し、代入
         val favoriteImageView: ImageView = view.findViewById(R.id.favoriteImageView)
+        // レイアウトファイルからidがaddressのTextViewオブジェクトを取得し、代入
+        val addressTextView: TextView = view.findViewById(R.id.addressTextView)
     }
 
     override fun getItemCount(): Int {
@@ -103,11 +104,11 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
                         onClickDeleteFavorite?.invoke(data)
                     } else {
                         onClickAddFavorite?.invoke(data)
-                        Log.d("asas", data.id)
                     }
                     notifyItemChanged(position)
                 }
             }
+            addressTextView.setText(data.address)
         }
     }
 }

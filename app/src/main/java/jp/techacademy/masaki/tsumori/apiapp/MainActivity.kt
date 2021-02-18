@@ -3,14 +3,16 @@ package jp.techacademy.masaki.tsumori.apiapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), FragmentCallback {
 
-    private val viewPagerAdapter by lazy { ViewPagerAdapter(this) }
+    val viewPagerAdapter by lazy { ViewPagerAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,19 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
             tab.setText(viewPagerAdapter.titleIds[position])
         }.attach()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewPagerAdapter.fragments[VIEW_PAGER_POSITION_API] != null) {
+            (viewPagerAdapter.fragments[VIEW_PAGER_POSITION_API] as ApiFragment).updateView()
+        }
+        try {
+            (viewPagerAdapter.fragments[VIEW_PAGER_POSITION_FAVORITE] as FavoriteFragment).updateData()
+        }catch (e: Exception) {
+
+        }
+    }
+
 
     override fun onAddFavorite(shop: Shop) { // Favoriteに追加するときのメソッド(Fragment -> Activity へ通知する)
         FavoriteShop.insert(FavoriteShop().apply {
